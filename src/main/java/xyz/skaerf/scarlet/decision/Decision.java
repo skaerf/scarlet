@@ -1,15 +1,28 @@
 package xyz.skaerf.scarlet.decision;
 
+import jakarta.persistence.*;
+
 import java.time.Instant;
 import java.util.UUID;
 
+@Entity
+@Table(name = "decisions")
 public class Decision {
 
-    private final UUID id;
-    private final UUID triggeringEventID;
-    private final DecisionType type;
-    private final String reason;
-    private final Instant createdAt;
+    @Id
+    private UUID id;
+    @Column(nullable = false)
+    private UUID triggeringEventID;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private DecisionType type;
+    @Column(nullable = false)
+    private String reason;
+    @Column(nullable = false)
+    private Instant createdAt;
+
+    protected Decision() {
+    }
 
     public Decision(UUID triggeringEventID, DecisionType type, String reason) {
         this.id = UUID.randomUUID();

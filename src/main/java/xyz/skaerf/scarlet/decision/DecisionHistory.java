@@ -3,29 +3,23 @@ package xyz.skaerf.scarlet.decision;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Component
 public class DecisionHistory {
 
-    private final List<Decision> decisions;
-    private final int maximumDecisions;
+    private final DecisionRepository decisionRepository;
 
-    public DecisionHistory() {
-        this.decisions = new ArrayList<>();
-        this.maximumDecisions = 100;
+    public DecisionHistory(DecisionRepository decisionRepository) {
+        this.decisionRepository = decisionRepository;
     }
 
     @EventListener
     public synchronized void onDecision(Decision decision) {
-        decisions.add(decision);
-        if (decisions.size() > maximumDecisions) {
-            decisions.removeFirst();
-        }
+        decisionRepository.save(decision);
     }
 
     public synchronized List<Decision> getDecisions() {
-        return new ArrayList<>(decisions);
+        return decisionRepository.findAll();
     }
 }
