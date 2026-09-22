@@ -5,7 +5,7 @@ import xyz.skaerf.scarlet.events.mgmt.ScarletEvent;
 
 public class TimeTickEvent extends ScarletEvent {
 
-    public TimeTickEvent(EventSource source) {
+    public TimeTickEvent() {
         super(EventSource.CLOCK);
     }
 }

@@ -20,11 +20,12 @@ public class WorldStateController {
 
     @GetMapping("/state/application")
     public String getActiveApplication() {
-        return worldState.getActiveDevice() + ": "+worldState.getActiveApplication();
+        WorldState.Snapshot snapshot = worldState.getSnapshot();
+        return snapshot.getActiveDevice() + ": "+snapshot.getActiveApplication();
     }
 
     @GetMapping("/state")
-    public WorldState getState() {
-        return worldState;
+    public WorldState.Snapshot getState() {
+        return worldState.getSnapshot();
     }
 }
